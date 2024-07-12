@@ -14,14 +14,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.sendiko.bottomnavbar.navigation.Graph
+import com.sendiko.bottomnavbar.navigation.AboutScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    onNavigate: (route: String) -> Unit
+    onNavigate: (route: Any) -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -33,7 +33,7 @@ fun HomeScreen(
                     }
                 },
                 actions = {
-                    IconButton(onClick = { onNavigate(Graph.DetailsGraph.route) }) {
+                    IconButton(onClick = { onNavigate(AboutScreen) }) {
                         Icon(imageVector = Icons.Rounded.Info, contentDescription = "about app")
                     }
                 }

@@ -2,7 +2,6 @@ package com.sendiko.bottomnavbar.navigation
 
 import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.padding
@@ -29,43 +28,28 @@ fun MainGraphContainer(
     modifier: Modifier = Modifier,
     navHostController: NavHostController = rememberNavController()
 ) {
-    var currentRoute by remember { mutableStateOf(Destinations.HomeScreen.route) }
+    val navBackStackEntry by navHostController.currentBackStackEntryAsState()
+    val isVisible = navBackStackEntry?.destination?.route?.contains(HomeScreen.toString()) ?: false || navBackStackEntry?.destination?.route?.contains(SettingsScreen.toString()) ?: false
+    var currentRoute by remember {
+        mutableStateOf(HomeScreen.toString())
+    }
+
     val bottomNavItems = listOf(
         BottomNavItem(
             name = "Home",
-            route = Destinations.HomeScreen.route,
+            route = HomeScreen,
             icon = Icons.Default.Home
         ),
         BottomNavItem(
             name = "Settings",
-            route = Destinations.SettingsScreen.route,
+            route = SettingsScreen,
             icon = Icons.Default.Settings
         )
     )
+    Log.i("DESTINATION", "currentRouteState: ${navBackStackEntry?.destination?.route}")
+    Log.i("DESTINATION", "currentRoute: $currentRoute")
     Scaffold(
         bottomBar = {
-            val slideUp = tween<Float>(
-                durationMillis = 300, // Adjust duration as needed
-                easing = {
-                    when {
-                        it < 0.5f -> 2 * it
-                        else -> 1 - (it - 0.5f) * 2
-                    }
-                }
-            )
-
-            val slideDown = tween<Float>(
-                durationMillis = 300, // Adjust duration as needed
-                easing = {
-                    when {
-                        it < 0.5f -> (it - 0.5f) * 2
-                        else -> 1.0f
-                    }
-                }
-            )
-            val navBackStackEntry by navHostController.currentBackStackEntryAsState()
-            val isVisible = navBackStackEntry?.destination?.route == Destinations.HomeScreen.route || navBackStackEntry?.destination?.route == Destinations.SettingsScreen.route
-            Log.i("DESTINATION", "MainGraphContainer: $isVisible")
             AnimatedVisibility(
                 visible = isVisible,
                 enter = expandVertically(),
@@ -74,9 +58,9 @@ fun MainGraphContainer(
                 NavigationBar {
                     bottomNavItems.forEach { item ->
                         NavigationBarItem(
-                            selected = item.route == currentRoute,
+                            selected = currentRoute.contains(item.route.toString()),
                             onClick = {
-                                currentRoute = item.route
+                                currentRoute = item.route.toString()
                                 navHostController.navigate(item.route)
                             },
                             icon = {
@@ -86,7 +70,7 @@ fun MainGraphContainer(
                                 )
                             },
                             label = { Text(item.name) },
-                            alwaysShowLabel = item.route == currentRoute
+                            alwaysShowLabel = currentRoute.contains(item.route.toString())
                         )
                     }
                 }

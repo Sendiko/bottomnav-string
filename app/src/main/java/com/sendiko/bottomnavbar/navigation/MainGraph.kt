@@ -9,8 +9,6 @@ import androidx.navigation.navigation
 import com.sendiko.bottomnavbar.AboutScreen
 import com.sendiko.bottomnavbar.HomeScreen
 import com.sendiko.bottomnavbar.SettingsScreen
-import com.sendiko.bottomnavbar.navigation.Destinations.HomeScreen
-import com.sendiko.bottomnavbar.navigation.Destinations.SettingsScreen
 
 @Composable
 fun MainGraph(
@@ -19,27 +17,22 @@ fun MainGraph(
 ) {
     NavHost(
         navController = navHostController,
-        startDestination = HomeScreen.route
+        startDestination = HomeScreen
     ) {
-        composable(
-            route = HomeScreen.route
-        ) {
+        composable<HomeScreen> {
             HomeScreen(
                 onNavigate = {
                     navHostController.navigate(it)
                 }
             )
         }
-        composable(SettingsScreen.route) {
+        composable<SettingsScreen> {
             SettingsScreen()
         }
-        navigation(
-            route = Graph.DetailsGraph.route,
-            startDestination = Destinations.AboutScreen.route
+        navigation<DetailsGraph>(
+            startDestination = AboutScreen
         ) {
-            composable(
-                route = Destinations.AboutScreen.route
-            ) {
+            composable<AboutScreen>{
                 AboutScreen(
                     onNavigateBack = {
                         navHostController.navigateUp()

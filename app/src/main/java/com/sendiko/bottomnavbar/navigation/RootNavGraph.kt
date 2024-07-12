@@ -7,8 +7,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.sendiko.bottomnavbar.WelcomeScreen
-import com.sendiko.bottomnavbar.navigation.Destinations.WelcomeScreen
-import com.sendiko.bottomnavbar.navigation.Graph.AuthGraph
 
 @Composable
 fun RootNavGraph(
@@ -17,16 +15,12 @@ fun RootNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Graph.AuthGraph.route,
-        route = Graph.RootGraph.route
+        startDestination = AuthGraph,
     ) {
-        navigation(
-            startDestination = WelcomeScreen.route,
-            route = AuthGraph.route
+        navigation<AuthGraph>(
+            startDestination = WelcomeScreen,
         ) {
-            composable(
-                route = WelcomeScreen.route
-            ) {
+            composable<WelcomeScreen> {
                 WelcomeScreen(
                     onNavigate = {
                         navController.navigate(it)
@@ -34,9 +28,7 @@ fun RootNavGraph(
                 )
             }
         }
-        composable(
-            route = Graph.MainGraph.route
-        ) {
+        composable<MainGraph> {
             MainGraphContainer()
         }
     }

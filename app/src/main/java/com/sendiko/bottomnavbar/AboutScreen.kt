@@ -59,7 +59,7 @@ fun AboutScreen(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(text = "Version: ")
-                Text(text = "1.0.0-rc01", fontWeight = FontWeight.Bold)
+                Text(text = "1.0.0", fontWeight = FontWeight.Bold)
             }
         }
     }

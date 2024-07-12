@@ -12,17 +12,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.sendiko.bottomnavbar.navigation.Graph
+import com.sendiko.bottomnavbar.navigation.MainGraph
 import kotlinx.coroutines.delay
 
 @Composable
 fun WelcomeScreen(
     modifier: Modifier = Modifier,
-    onNavigate: (route: String) -> Unit
+    onNavigate: (route: Any) -> Unit
 ) {
     LaunchedEffect(key1 = true) {
         delay(2000)
-        onNavigate(Graph.MainGraph.route)
+        onNavigate(MainGraph)
     }
     Scaffold {
         Box(
